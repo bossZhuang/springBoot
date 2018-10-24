@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rivergame.fvgm.dao.farmaccounts.PlayerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.rivergame.fvgm.model.PlayerInfo" >
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="lang" property="lang" jdbcType="VARCHAR" />
+    <result column="banTime" property="bantime" jdbcType="BIGINT" />
+    <result column="regTime" property="regtime" jdbcType="BIGINT" />
+    <result column="lastLoginTime" property="lastlogintime" jdbcType="BIGINT" />
+    <result column="lastLogoutTime" property="lastlogouttime" jdbcType="BIGINT" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="exp" property="exp" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="gold" property="gold" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="INTEGER" />
+    <result column="guide" property="guide" jdbcType="VARCHAR" />
+    <result column="inviter" property="inviter" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, name, avatar, version, country, lang, banTime, regTime, lastLoginTime, lastLogoutTime, 
+    ip, exp, level, gold, money, guide, inviter, info
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rivergame.fvgm.model.PlayerInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from player_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_info
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from player_info
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rivergame.fvgm.model.PlayerInfoExample" >
+    delete from player_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rivergame.fvgm.model.PlayerInfo" >
+    insert into player_info (uid, name, avatar, 
+      version, country, lang, 
+      banTime, regTime, lastLoginTime, 
+      lastLogoutTime, ip, exp, 
+      level, gold, money, 
+      guide, inviter, info
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{lang,jdbcType=VARCHAR}, 
+      #{bantime,jdbcType=BIGINT}, #{regtime,jdbcType=BIGINT}, #{lastlogintime,jdbcType=BIGINT}, 
+      #{lastlogouttime,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{exp,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{gold,jdbcType=INTEGER}, #{money,jdbcType=INTEGER}, 
+      #{guide,jdbcType=VARCHAR}, #{inviter,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rivergame.fvgm.model.PlayerInfo" >
+    insert into player_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="lang != null" >
+        lang,
+      </if>
+      <if test="bantime != null" >
+        banTime,
+      </if>
+      <if test="regtime != null" >
+        regTime,
+      </if>
+      <if test="lastlogintime != null" >
+        lastLoginTime,
+      </if>
+      <if test="lastlogouttime != null" >
+        lastLogoutTime,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="exp != null" >
+        exp,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="guide != null" >
+        guide,
+      </if>
+      <if test="inviter != null" >
+        inviter,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="lang != null" >
+        #{lang,jdbcType=VARCHAR},
+      </if>
+      <if test="bantime != null" >
+        #{bantime,jdbcType=BIGINT},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=BIGINT},
+      </if>
+      <if test="lastlogintime != null" >
+        #{lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="lastlogouttime != null" >
+        #{lastlogouttime,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="exp != null" >
+        #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null" >
+        #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="inviter != null" >
+        #{inviter,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rivergame.fvgm.model.PlayerInfoExample" resultType="java.lang.Integer" >
+    select count(*) from player_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update player_info
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lang != null" >
+        lang = #{record.lang,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bantime != null" >
+        banTime = #{record.bantime,jdbcType=BIGINT},
+      </if>
+      <if test="record.regtime != null" >
+        regTime = #{record.regtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastlogintime != null" >
+        lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastlogouttime != null" >
+        lastLogoutTime = #{record.lastlogouttime,jdbcType=BIGINT},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp != null" >
+        exp = #{record.exp,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.gold != null" >
+        gold = #{record.gold,jdbcType=INTEGER},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=INTEGER},
+      </if>
+      <if test="record.guide != null" >
+        guide = #{record.guide,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inviter != null" >
+        inviter = #{record.inviter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update player_info
+    set uid = #{record.uid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      lang = #{record.lang,jdbcType=VARCHAR},
+      banTime = #{record.bantime,jdbcType=BIGINT},
+      regTime = #{record.regtime,jdbcType=BIGINT},
+      lastLoginTime = #{record.lastlogintime,jdbcType=BIGINT},
+      lastLogoutTime = #{record.lastlogouttime,jdbcType=BIGINT},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      exp = #{record.exp,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=INTEGER},
+      gold = #{record.gold,jdbcType=INTEGER},
+      money = #{record.money,jdbcType=INTEGER},
+      guide = #{record.guide,jdbcType=VARCHAR},
+      inviter = #{record.inviter,jdbcType=VARCHAR},
+      info = #{record.info,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rivergame.fvgm.model.PlayerInfo" >
+    update player_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="lang != null" >
+        lang = #{lang,jdbcType=VARCHAR},
+      </if>
+      <if test="bantime != null" >
+        banTime = #{bantime,jdbcType=BIGINT},
+      </if>
+      <if test="regtime != null" >
+        regTime = #{regtime,jdbcType=BIGINT},
+      </if>
+      <if test="lastlogintime != null" >
+        lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
+      </if>
+      <if test="lastlogouttime != null" >
+        lastLogoutTime = #{lastlogouttime,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="exp != null" >
+        exp = #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null" >
+        guide = #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="inviter != null" >
+        inviter = #{inviter,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rivergame.fvgm.model.PlayerInfo" >
+    update player_info
+    set name = #{name,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      lang = #{lang,jdbcType=VARCHAR},
+      banTime = #{bantime,jdbcType=BIGINT},
+      regTime = #{regtime,jdbcType=BIGINT},
+      lastLoginTime = #{lastlogintime,jdbcType=BIGINT},
+      lastLogoutTime = #{lastlogouttime,jdbcType=BIGINT},
+      ip = #{ip,jdbcType=VARCHAR},
+      exp = #{exp,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      gold = #{gold,jdbcType=INTEGER},
+      money = #{money,jdbcType=INTEGER},
+      guide = #{guide,jdbcType=VARCHAR},
+      inviter = #{inviter,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
+  <!--自己写的-->
+  <select id="selectListPage"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo"
+          resultType="com.rivergame.fvgm.model.PlayerInfo">
+    select
+    <include refid="Base_Column_List" />
+    from player_info
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND uid = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+    <if test="queryParam.queryName != null" >
+      AND `name` like concat(concat('%',#{queryParam.queryName,jdbcType=VARCHAR}), '%')
+    </if>
+    LIMIT #{pageStart},#{limitSize}
+  </select>
+
+  <select id="selectCountNum"
+          resultType="java.lang.Integer"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo">
+    select
+    count(1)
+    from player_info
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND uid = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+    <if test="queryParam.queryName != null" >
+      AND `name` like concat(concat('%',#{queryParam.queryName,jdbcType=VARCHAR}), '%')
+    </if>
+  </select>
+</mapper>

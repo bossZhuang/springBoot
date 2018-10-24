@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rivergame.fvgm.dao.farmplayers.PlayerBuildingMapper">
+  <resultMap id="BaseResultMap" type="com.rivergame.fvgm.model.PlayerBuilding">
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="buildId" property="buildid" jdbcType="VARCHAR" />
+    <result column="pos" property="pos" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="INTEGER" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uuid, uid, buildId, pos, status, level, createTime, updateTime, info
+  </sql>
+
+  <select id="selectListByQueryParams"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    <if test="queryParam.tableId != null" >
+      player_building_#{queryParam.tableId,jdbcType=INTEGER}
+    </if>
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND uid = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+</mapper>

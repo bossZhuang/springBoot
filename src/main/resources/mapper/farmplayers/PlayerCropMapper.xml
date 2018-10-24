@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rivergame.fvgm.dao.farmplayers.PlayerCropMapper" >
+  <resultMap id="BaseResultMap" type="com.rivergame.fvgm.model.PlayerCrop" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="cropId" property="cropid" jdbcType="VARCHAR" />
+    <result column="pos" property="pos" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uuid, uid, cropId, pos, status, createTime, updateTime
+  </sql>
+  <select id="selectListByQueryParams"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    <if test="queryParam.tableId != null" >
+      player_crop_#{queryParam.tableId,jdbcType=INTEGER}
+    </if>
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND uid = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

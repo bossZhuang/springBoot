@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rivergame.fvgm.dao.farmaccounts.PlayerResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.rivergame.fvgm.model.PlayerResource" >
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="feed" property="feed" jdbcType="INTEGER" />
+    <result column="fertilizer" property="fertilizer" jdbcType="INTEGER" />
+    <result column="water" property="water" jdbcType="INTEGER" />
+    <result column="maxWater" property="maxwater" jdbcType="INTEGER" />
+    <result column="fire" property="fire" jdbcType="INTEGER" />
+    <result column="maxFire" property="maxfire" jdbcType="INTEGER" />
+    <result column="lastWaterTime" property="lastwatertime" jdbcType="INTEGER" />
+    <result column="lastFireTime" property="lastfiretime" jdbcType="INTEGER" />
+    <result column="unlockAreas" property="unlockareas" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, feed, fertilizer, water, maxWater, fire, maxFire, lastWaterTime, lastFireTime, 
+    unlockAreas
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rivergame.fvgm.model.PlayerResourceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from player_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_resource
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from player_resource
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rivergame.fvgm.model.PlayerResourceExample" >
+    delete from player_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rivergame.fvgm.model.PlayerResource" >
+    insert into player_resource (uid, feed, fertilizer, 
+      water, maxWater, fire, 
+      maxFire, lastWaterTime, lastFireTime, 
+      unlockAreas)
+    values (#{uid,jdbcType=VARCHAR}, #{feed,jdbcType=INTEGER}, #{fertilizer,jdbcType=INTEGER}, 
+      #{water,jdbcType=INTEGER}, #{maxwater,jdbcType=INTEGER}, #{fire,jdbcType=INTEGER}, 
+      #{maxfire,jdbcType=INTEGER}, #{lastwatertime,jdbcType=INTEGER}, #{lastfiretime,jdbcType=INTEGER}, 
+      #{unlockareas,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rivergame.fvgm.model.PlayerResource" >
+    insert into player_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="feed != null" >
+        feed,
+      </if>
+      <if test="fertilizer != null" >
+        fertilizer,
+      </if>
+      <if test="water != null" >
+        water,
+      </if>
+      <if test="maxwater != null" >
+        maxWater,
+      </if>
+      <if test="fire != null" >
+        fire,
+      </if>
+      <if test="maxfire != null" >
+        maxFire,
+      </if>
+      <if test="lastwatertime != null" >
+        lastWaterTime,
+      </if>
+      <if test="lastfiretime != null" >
+        lastFireTime,
+      </if>
+      <if test="unlockareas != null" >
+        unlockAreas,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="feed != null" >
+        #{feed,jdbcType=INTEGER},
+      </if>
+      <if test="fertilizer != null" >
+        #{fertilizer,jdbcType=INTEGER},
+      </if>
+      <if test="water != null" >
+        #{water,jdbcType=INTEGER},
+      </if>
+      <if test="maxwater != null" >
+        #{maxwater,jdbcType=INTEGER},
+      </if>
+      <if test="fire != null" >
+        #{fire,jdbcType=INTEGER},
+      </if>
+      <if test="maxfire != null" >
+        #{maxfire,jdbcType=INTEGER},
+      </if>
+      <if test="lastwatertime != null" >
+        #{lastwatertime,jdbcType=INTEGER},
+      </if>
+      <if test="lastfiretime != null" >
+        #{lastfiretime,jdbcType=INTEGER},
+      </if>
+      <if test="unlockareas != null" >
+        #{unlockareas,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rivergame.fvgm.model.PlayerResourceExample" resultType="java.lang.Integer" >
+    select count(*) from player_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update player_resource
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feed != null" >
+        feed = #{record.feed,jdbcType=INTEGER},
+      </if>
+      <if test="record.fertilizer != null" >
+        fertilizer = #{record.fertilizer,jdbcType=INTEGER},
+      </if>
+      <if test="record.water != null" >
+        water = #{record.water,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxwater != null" >
+        maxWater = #{record.maxwater,jdbcType=INTEGER},
+      </if>
+      <if test="record.fire != null" >
+        fire = #{record.fire,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxfire != null" >
+        maxFire = #{record.maxfire,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastwatertime != null" >
+        lastWaterTime = #{record.lastwatertime,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastfiretime != null" >
+        lastFireTime = #{record.lastfiretime,jdbcType=INTEGER},
+      </if>
+      <if test="record.unlockareas != null" >
+        unlockAreas = #{record.unlockareas,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update player_resource
+    set uid = #{record.uid,jdbcType=VARCHAR},
+      feed = #{record.feed,jdbcType=INTEGER},
+      fertilizer = #{record.fertilizer,jdbcType=INTEGER},
+      water = #{record.water,jdbcType=INTEGER},
+      maxWater = #{record.maxwater,jdbcType=INTEGER},
+      fire = #{record.fire,jdbcType=INTEGER},
+      maxFire = #{record.maxfire,jdbcType=INTEGER},
+      lastWaterTime = #{record.lastwatertime,jdbcType=INTEGER},
+      lastFireTime = #{record.lastfiretime,jdbcType=INTEGER},
+      unlockAreas = #{record.unlockareas,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rivergame.fvgm.model.PlayerResource" >
+    update player_resource
+    <set >
+      <if test="feed != null" >
+        feed = #{feed,jdbcType=INTEGER},
+      </if>
+      <if test="fertilizer != null" >
+        fertilizer = #{fertilizer,jdbcType=INTEGER},
+      </if>
+      <if test="water != null" >
+        water = #{water,jdbcType=INTEGER},
+      </if>
+      <if test="maxwater != null" >
+        maxWater = #{maxwater,jdbcType=INTEGER},
+      </if>
+      <if test="fire != null" >
+        fire = #{fire,jdbcType=INTEGER},
+      </if>
+      <if test="maxfire != null" >
+        maxFire = #{maxfire,jdbcType=INTEGER},
+      </if>
+      <if test="lastwatertime != null" >
+        lastWaterTime = #{lastwatertime,jdbcType=INTEGER},
+      </if>
+      <if test="lastfiretime != null" >
+        lastFireTime = #{lastfiretime,jdbcType=INTEGER},
+      </if>
+      <if test="unlockareas != null" >
+        unlockAreas = #{unlockareas,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rivergame.fvgm.model.PlayerResource" >
+    update player_resource
+    set feed = #{feed,jdbcType=INTEGER},
+      fertilizer = #{fertilizer,jdbcType=INTEGER},
+      water = #{water,jdbcType=INTEGER},
+      maxWater = #{maxwater,jdbcType=INTEGER},
+      fire = #{fire,jdbcType=INTEGER},
+      maxFire = #{maxfire,jdbcType=INTEGER},
+      lastWaterTime = #{lastwatertime,jdbcType=INTEGER},
+      lastFireTime = #{lastfiretime,jdbcType=INTEGER},
+      unlockAreas = #{unlockareas,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rivergame.fvgm.dao.farmtime.PayOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.rivergame.fvgm.model.PayOrder" >
+    <id column="orderId" property="orderid" jdbcType="BIGINT" />
+    <result column="transId" property="transid" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="playerId" property="playerid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="startTime" property="starttime" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="INTEGER" />
+    <result column="packageId" property="packageid" jdbcType="VARCHAR" />
+    <result column="skuId" property="skuid" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="items" property="items" jdbcType="VARCHAR" />
+    <result column="gross" property="gross" jdbcType="DECIMAL" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="extra" property="extra" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    orderId, transId, channel, playerId, status, startTime, updateTime, packageId, skuId, 
+    amount, items, gross, currency, fee, extra
+  </sql>
+
+  <select id="selectListByQueryParams"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pay_order
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND playerId = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="selectCountNum"
+          resultType="java.lang.Integer"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo">
+    select
+    count(*)
+    from pay_order
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND playerId = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+</mapper>

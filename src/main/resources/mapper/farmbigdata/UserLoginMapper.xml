@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rivergame.fvgm.dao.farmbigdata.UserLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.rivergame.fvgm.model.UserLogin" >
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="serverid" property="serverid" jdbcType="TINYINT" />
+    <result column="time" property="time" jdbcType="BIGINT" />
+    <result column="disconnect" property="disconnect" jdbcType="BIGINT" />
+    <result column="pf" property="pf" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="appversion" property="appversion" jdbcType="VARCHAR" />
+    <result column="scenceid" property="scenceid" jdbcType="VARCHAR" />
+    <result column="adid" property="adid" jdbcType="VARCHAR" />
+    <result column="admaterial" property="admaterial" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="system" property="system" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    uid, serverid, time, disconnect, pf, country, ip, appversion, scenceid, adid, admaterial, 
+    brand, system, model, version
+  </sql>
+
+  <select id="selectListByQueryParams"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    <if test="queryParam.tableId != null" >
+      user_login_#{queryParam.tableId,jdbcType=INTEGER}
+    </if>
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND uid = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+    <if test="queryParam.startLong != null" >
+      AND `time` <![CDATA[ >= ]]> #{queryParam.startLong,jdbcType=INTEGER}
+    </if>
+    <if test="queryParam.endLong != null" >
+      AND `time` <![CDATA[ < ]]> #{queryParam.endLong,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="selectCountNum"
+          resultType="java.lang.Integer"
+          parameterType="com.rivergame.fvgm.model.vo.AdminPageVo">
+    select
+    count(*)
+    from
+    <if test="queryParam.tableId != null" >
+      user_login_#{queryParam.tableId,jdbcType=INTEGER}
+    </if>
+    where 1=1
+    <if test="queryParam.queryId != null" >
+      AND uid = #{queryParam.queryId,jdbcType=INTEGER}
+    </if>
+    <if test="queryParam.startLong != null" >
+      AND `time` <![CDATA[ >= ]]> #{queryParam.startLong,jdbcType=INTEGER}
+    </if>
+    <if test="queryParam.endLong != null" >
+      AND `time` <![CDATA[ < ]]> #{queryParam.endLong,jdbcType=INTEGER}
+    </if>
+  </select>
+
+</mapper>
